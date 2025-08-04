@@ -3,6 +3,8 @@ import './App.css';
 import Dashboard from './components/Dashboard';
 import WebSocketService from './services/WebSocketService';
 import AlertPanel from './components/AlertPanel';
+import ThemeToggle from './components/ThemeToggle';
+import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 
 /**
  * Main App component for the Aircraft Health Monitoring Dashboard
@@ -13,7 +15,8 @@ import AlertPanel from './components/AlertPanel';
  * @author Aircraft Monitoring Team
  * @version 1.0.0
  */
-function App() {
+const AppContent = () => {
+  const { isDarkMode } = useTheme();
   const [aircraftData, setAircraftData] = useState(null);
   const [alerts, setAlerts] = useState([]);
   const [connectionStatus, setConnectionStatus] = useState('disconnected');
@@ -105,9 +108,17 @@ function App() {
   }, []);
 
   return (
-    <div className="App min-h-screen bg-dashboard-bg text-white">
+    <div className={`App min-h-screen transition-colors duration-200 ${
+      isDarkMode 
+        ? 'bg-dashboard-bg text-white' 
+        : 'bg-dashboard-bg-light text-gray-900'
+    }`}>
       {/* Header */}
-      <header className="bg-card-bg border-b border-border-color">
+      <header className={`border-b transition-colors duration-200 ${
+        isDarkMode 
+          ? 'bg-card-bg border-border-color' 
+          : 'bg-card-bg-light border-border-color-light'
+      }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-3">
@@ -115,10 +126,14 @@ function App() {
                 <span className="text-white font-bold text-sm">✈</span>
               </div>
               <div>
-                <h1 className="text-xl font-bold text-white">
+                <h1 className={`text-xl font-bold transition-colors duration-200 ${
+                  isDarkMode ? 'text-white' : 'text-gray-900'
+                }`}>
                   Aircraft Health Monitoring System
                 </h1>
-                <p className="text-sm text-gray-400">
+                <p className={`text-sm transition-colors duration-200 ${
+                  isDarkMode ? 'text-gray-400' : 'text-gray-600'
+                }`}>
                   Real-Time Aviation Dashboard
                 </p>
               </div>
@@ -126,6 +141,9 @@ function App() {
             
             {/* Connection Status */}
             <div className="flex items-center space-x-4">
+              {/* Theme Toggle */}
+              <ThemeToggle />
+              
               <div className={`flex items-center space-x-2 px-3 py-1 rounded-full text-sm font-medium ${
                 connectionStatus === 'connected' 
                   ? 'bg-aviation-green text-white' 
@@ -145,7 +163,9 @@ function App() {
                 <span className="capitalize">{connectionStatus === 'polling' ? 'REST API' : connectionStatus}</span>
               </div>
               
-              <div className="text-sm text-gray-400">
+              <div className={`text-sm transition-colors duration-200 ${
+                isDarkMode ? 'text-gray-400' : 'text-gray-600'
+              }`}>
                 {aircraftData ? (
                   <span>Last Update: {new Date(aircraftData.timestamp).toLocaleTimeString()}</span>
                 ) : (
@@ -168,6 +188,15 @@ function App() {
       {/* Alert Panel */}
       <AlertPanel alerts={alerts} />
     </div>
+  );
+};
+
+// Main App wrapper with ThemeProvider
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
 

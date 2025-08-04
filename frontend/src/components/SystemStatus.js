@@ -1,5 +1,6 @@
 import React from 'react';
 import { CheckCircle, AlertTriangle, XCircle, Activity } from 'lucide-react';
+import { useTheme } from '../contexts/ThemeContext';
 
 /**
  * System Status component for displaying overall aircraft system status
@@ -11,6 +12,7 @@ import { CheckCircle, AlertTriangle, XCircle, Activity } from 'lucide-react';
  * @version 1.0.0
  */
 const SystemStatus = ({ aircraftData }) => {
+  const { isDarkMode } = useTheme();
   const systems = [
     {
       name: 'Engine',
