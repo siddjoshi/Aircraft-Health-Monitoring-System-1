@@ -1,5 +1,6 @@
 import React from 'react';
 import { Gauge, Zap, Thermometer, Droplets } from 'lucide-react';
+import { useTheme } from '../contexts/ThemeContext';
 
 /**
  * Engine System component for displaying engine-related sensor data
@@ -11,6 +12,7 @@ import { Gauge, Zap, Thermometer, Droplets } from 'lucide-react';
  * @version 1.0.0
  */
 const EngineSystem = ({ data, hasAnomaly }) => {
+  const { isDarkMode } = useTheme();
   const getStatusColor = (value, min, max, criticalMax = null) => {
     if (criticalMax && value > criticalMax) return 'text-aviation-red';
     if (value < min || value > max) return 'text-aviation-yellow';
@@ -24,11 +26,15 @@ const EngineSystem = ({ data, hasAnomaly }) => {
   };
 
   return (
-    <div className={`bg-card-bg border border-border-color rounded-lg p-6 ${
-      hasAnomaly ? 'border-aviation-red shadow-lg shadow-aviation-red/20' : ''
-    }`}>
+    <div className={`rounded-lg p-6 border transition-colors duration-200 ${
+      isDarkMode 
+        ? 'bg-card-bg border-border-color' 
+        : 'bg-card-bg-light border-border-color-light'
+    } ${hasAnomaly ? 'border-aviation-red shadow-lg shadow-aviation-red/20' : ''}`}>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-white flex items-center">
+        <h3 className={`text-lg font-semibold flex items-center transition-colors duration-200 ${
+          isDarkMode ? 'text-white' : 'text-gray-900'
+        }`}>
           <Zap className="w-5 h-5 mr-2 text-aviation-yellow" />
           Engine System
         </h3>

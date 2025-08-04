@@ -5,6 +5,7 @@ import HydraulicSystem from './HydraulicSystem';
 import FlightData from './FlightData';
 import SystemStatus from './SystemStatus';
 import AnomalyControls from './AnomalyControls';
+import { useTheme } from '../contexts/ThemeContext';
 
 /**
  * Main Dashboard component for aircraft health monitoring
@@ -16,12 +17,16 @@ import AnomalyControls from './AnomalyControls';
  * @version 1.0.0
  */
 const Dashboard = ({ aircraftData, connectionStatus }) => {
+  const { isDarkMode } = useTheme();
+  
   if (!aircraftData) {
     return (
       <div className="flex items-center justify-center min-h-96">
         <div className="text-center">
           <div className="loading-spinner mx-auto mb-4"></div>
-          <p className="text-gray-400">
+          <p className={`transition-colors duration-200 ${
+            isDarkMode ? 'text-gray-400' : 'text-gray-600'
+          }`}>
             {connectionStatus === 'connected' 
               ? 'Waiting for aircraft data...' 
               : 'Connecting to aircraft monitoring system...'}
@@ -77,21 +82,35 @@ const Dashboard = ({ aircraftData, connectionStatus }) => {
       {/* Additional Systems */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Cabin Systems */}
-        <div className="bg-card-bg border border-border-color rounded-lg p-6 card-hover">
-          <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
+        <div className={`rounded-lg p-6 card-hover border transition-colors duration-200 ${
+          isDarkMode 
+            ? 'bg-card-bg border-border-color' 
+            : 'bg-card-bg-light border-border-color-light'
+        }`}>
+          <h3 className={`text-lg font-semibold mb-4 flex items-center transition-colors duration-200 ${
+            isDarkMode ? 'text-white' : 'text-gray-900'
+          }`}>
             <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
             Cabin Systems
           </h3>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <p className="text-sm text-gray-400">Cabin Pressure</p>
-              <p className="text-xl font-mono font-semibold text-white">
+              <p className={`text-sm transition-colors duration-200 ${
+                isDarkMode ? 'text-gray-400' : 'text-gray-600'
+              }`}>Cabin Pressure</p>
+              <p className={`text-xl font-mono font-semibold transition-colors duration-200 ${
+                isDarkMode ? 'text-white' : 'text-gray-900'
+              }`}>
                 {aircraftData.cabinPressure?.toFixed(1) || 'N/A'} PSI
               </p>
             </div>
             <div>
-              <p className="text-sm text-gray-400">Cabin Temperature</p>
-              <p className="text-xl font-mono font-semibold text-white">
+              <p className={`text-sm transition-colors duration-200 ${
+                isDarkMode ? 'text-gray-400' : 'text-gray-600'
+              }`}>Cabin Temperature</p>
+              <p className={`text-xl font-mono font-semibold transition-colors duration-200 ${
+                isDarkMode ? 'text-white' : 'text-gray-900'
+              }`}>
                 {aircraftData.cabinTemperature?.toFixed(1) || 'N/A'}°C
               </p>
             </div>
@@ -99,21 +118,35 @@ const Dashboard = ({ aircraftData, connectionStatus }) => {
         </div>
         
         {/* Electrical Systems */}
-        <div className="bg-card-bg border border-border-color rounded-lg p-6 card-hover">
-          <h3 className="text-lg font-semibold text-white mb-4 flex items-center">
+        <div className={`rounded-lg p-6 card-hover border transition-colors duration-200 ${
+          isDarkMode 
+            ? 'bg-card-bg border-border-color' 
+            : 'bg-card-bg-light border-border-color-light'
+        }`}>
+          <h3 className={`text-lg font-semibold mb-4 flex items-center transition-colors duration-200 ${
+            isDarkMode ? 'text-white' : 'text-gray-900'
+          }`}>
             <span className="w-2 h-2 bg-yellow-500 rounded-full mr-2"></span>
             Electrical Systems
           </h3>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <p className="text-sm text-gray-400">Battery Voltage</p>
-              <p className="text-xl font-mono font-semibold text-white">
+              <p className={`text-sm transition-colors duration-200 ${
+                isDarkMode ? 'text-gray-400' : 'text-gray-600'
+              }`}>Battery Voltage</p>
+              <p className={`text-xl font-mono font-semibold transition-colors duration-200 ${
+                isDarkMode ? 'text-white' : 'text-gray-900'
+              }`}>
                 {aircraftData.batteryVoltage?.toFixed(1) || 'N/A'} V
               </p>
             </div>
             <div>
-              <p className="text-sm text-gray-400">Generator Output</p>
-              <p className="text-xl font-mono font-semibold text-white">
+              <p className={`text-sm transition-colors duration-200 ${
+                isDarkMode ? 'text-gray-400' : 'text-gray-600'
+              }`}>Generator Output</p>
+              <p className={`text-xl font-mono font-semibold transition-colors duration-200 ${
+                isDarkMode ? 'text-white' : 'text-gray-900'
+              }`}>
                 {aircraftData.generatorOutput?.toFixed(1) || 'N/A'} V
               </p>
             </div>
@@ -122,7 +155,9 @@ const Dashboard = ({ aircraftData, connectionStatus }) => {
       </div>
       
       {/* Data Timestamp */}
-      <div className="text-center text-sm text-gray-400">
+      <div className={`text-center text-sm transition-colors duration-200 ${
+        isDarkMode ? 'text-gray-400' : 'text-gray-600'
+      }`}>
         Last Updated: {new Date(aircraftData.timestamp).toLocaleString()}
       </div>
     </div>

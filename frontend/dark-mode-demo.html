@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Mode Toggle Demo - Aircraft Monitoring</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'aviation-blue': '#1e3a8a',
+                        'aviation-red': '#dc2626',
+                        'aviation-green': '#16a34a',
+                        'aviation-yellow': '#ca8a04',
+                        'aviation-gray': '#374151',
+                        'dashboard-bg': '#0f172a',
+                        'card-bg': '#1e293b',
+                        'border-color': '#334155',
+                        'dashboard-bg-light': '#f8fafc',
+                        'card-bg-light': '#ffffff',
+                        'border-color-light': '#e2e8f0'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .dark ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="min-h-screen transition-colors duration-200 bg-dashboard-bg-light dark:bg-dashboard-bg text-gray-900 dark:text-white">
+    <div id="app">
+        <!-- Header -->
+        <header class="bg-card-bg-light dark:bg-card-bg border-b border-border-color-light dark:border-border-color transition-colors duration-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-aviation-blue rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">✈</span>
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-bold text-gray-900 dark:text-white transition-colors duration-200">
+                                Aircraft Health Monitoring System
+                            </h1>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-200">
+                                Real-Time Aviation Dashboard
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Theme Toggle -->
+                    <button id="themeToggle" 
+                            class="relative flex items-center justify-center w-10 h-10 rounded-lg transition-all duration-200 ease-in-out bg-gray-200 hover:bg-gray-300 text-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600 dark:text-yellow-400 focus:outline-none focus:ring-2 focus:ring-aviation-blue focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-800"
+                            title="Toggle theme">
+                        <svg id="sunIcon" class="w-5 h-5 transition-transform duration-200 hover:rotate-12 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                        <svg id="moonIcon" class="w-5 h-5 transition-transform duration-200 hover:-rotate-12 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <!-- System Status Overview -->
+            <div class="bg-card-bg-light dark:bg-card-bg border border-border-color-light dark:border-border-color rounded-lg p-6 mb-6 transition-colors duration-200">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white transition-colors duration-200 flex items-center">
+                        <span class="w-2 h-2 bg-aviation-green rounded-full mr-2"></span>
+                        System Status Overview
+                    </h2>
+                    <div class="px-3 py-1 rounded-full text-sm font-medium bg-aviation-green text-white">
+                        NORMAL
+                    </div>
+                </div>
+                
+                <!-- Sample metrics -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-gray-900 dark:text-white transition-colors duration-200">4</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-200">Total Systems</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-aviation-green">4</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-200">Normal</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-aviation-yellow">0</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-200">Warning</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-aviation-red">0</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-200">Critical</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aircraft Systems Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Engine System -->
+                <div class="bg-card-bg-light dark:bg-card-bg border border-border-color-light dark:border-border-color rounded-lg p-6 transition-colors duration-200 hover:shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white transition-colors duration-200 flex items-center">
+                            <span class="text-aviation-yellow text-xl mr-2">⚡</span>
+                            Engine System
+                        </h3>
+                        <div class="px-2 py-1 rounded-full text-xs font-medium bg-aviation-green text-white">
+                            NORMAL
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-200">RPM</span>
+                            <span class="font-mono font-semibold text-gray-900 dark:text-white transition-colors duration-200">2,850</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-200">Temperature</span>
+                            <span class="font-mono font-semibold text-gray-900 dark:text-white transition-colors duration-200">425°C</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fuel System -->
+                <div class="bg-card-bg-light dark:bg-card-bg border border-border-color-light dark:border-border-color rounded-lg p-6 transition-colors duration-200 hover:shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white transition-colors duration-200 flex items-center">
+                            <span class="text-aviation-yellow text-xl mr-2">⛽</span>
+                            Fuel System
+                        </h3>
+                        <div class="px-2 py-1 rounded-full text-xs font-medium bg-aviation-green text-white">
+                            NORMAL
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-200">Level</span>
+                            <span class="font-mono font-semibold text-gray-900 dark:text-white transition-colors duration-200">85%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-200">Pressure</span>
+                            <span class="font-mono font-semibold text-gray-900 dark:text-white transition-colors duration-200">45 PSI</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hydraulic System -->
+                <div class="bg-card-bg-light dark:bg-card-bg border border-border-color-light dark:border-border-color rounded-lg p-6 transition-colors duration-200 hover:shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white transition-colors duration-200 flex items-center">
+                            <span class="text-aviation-blue text-xl mr-2">💧</span>
+                            Hydraulic System
+                        </h3>
+                        <div class="px-2 py-1 rounded-full text-xs font-medium bg-aviation-green text-white">
+                            NORMAL
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-200">Pressure</span>
+                            <span class="font-mono font-semibold text-gray-900 dark:text-white transition-colors duration-200">3,000 PSI</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-200">Fluid Level</span>
+                            <span class="font-mono font-semibold text-gray-900 dark:text-white transition-colors duration-200">92%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flight Data -->
+                <div class="bg-card-bg-light dark:bg-card-bg border border-border-color-light dark:border-border-color rounded-lg p-6 transition-colors duration-200 hover:shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white transition-colors duration-200 flex items-center">
+                            <span class="text-aviation-blue text-xl mr-2">✈️</span>
+                            Flight Data
+                        </h3>
+                        <div class="px-2 py-1 rounded-full text-xs font-medium bg-aviation-green text-white">
+                            NORMAL
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-200">Altitude</span>
+                            <span class="font-mono font-semibold text-gray-900 dark:text-white transition-colors duration-200">35,000 ft</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-200">Airspeed</span>
+                            <span class="font-mono font-semibold text-gray-900 dark:text-white transition-colors duration-200">450 kts</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="text-center text-sm text-gray-600 dark:text-gray-400 transition-colors duration-200 mt-8">
+                Last Updated: <span id="timestamp">Loading...</span>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        const timestamp = document.getElementById('timestamp');
+        
+        // Initialize theme from localStorage or default to light
+        const savedTheme = localStorage.getItem('aircraft-monitoring-theme');
+        const isDarkMode = savedTheme ? JSON.parse(savedTheme) : false;
+        
+        if (isDarkMode) {
+            html.classList.add('dark');
+        }
+        
+        // Update timestamp
+        timestamp.textContent = new Date().toLocaleString();
+        
+        // Theme toggle handler
+        themeToggle.addEventListener('click', () => {
+            const isDark = html.classList.contains('dark');
+            
+            if (isDark) {
+                html.classList.remove('dark');
+                localStorage.setItem('aircraft-monitoring-theme', 'false');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('aircraft-monitoring-theme', 'true');
+            }
+        });
+    </script>
+</body>
+</html>
