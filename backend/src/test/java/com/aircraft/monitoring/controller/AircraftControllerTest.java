@@ -510,7 +510,7 @@ class AircraftControllerTest {
         void shouldHandleRequestsWithLargePayloads() throws Exception {
             Map<String, String> largeAlertRequest = new HashMap<>();
             largeAlertRequest.put("type", "LARGE_TEST");
-            largeAlertRequest.put("message", "This is a large test message ".repeat(8)); // More realistic large message (~256 chars)
+            largeAlertRequest.put("message", "This is a large test message ".repeat(LARGE_TEST_MESSAGE_REPEAT_COUNT)); // More realistic large message (~256 chars)
             largeAlertRequest.put("severity", "INFO");
 
             mockMvc.perform(post("/api/aircraft/alert")
